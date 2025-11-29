@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WWMP - Where Winds Meet MIDI Player</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <h1>WWMP</h1>
+      <span class="subtitle">Where Winds Meet MIDI Player</span>
+    </header>
+
+    <!-- File Section -->
+    <section class="section">
+      <div class="section-header">
+        <h2>MIDI File</h2>
+      </div>
+      <div class="file-controls">
+        <button id="openFile" class="btn btn-primary">Open MIDI File...</button>
+        <span id="fileName" class="file-name">No file loaded</span>
+      </div>
+      <div id="fileInfo" class="file-info hidden">
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Duration</span>
+            <span id="duration" class="info-value">--</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Notes</span>
+            <span id="noteCount" class="info-value">--</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Range</span>
+            <span id="noteRange" class="info-value">--</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Tracks</span>
+            <span id="trackCount" class="info-value">--</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Playback Controls -->
+    <section class="section">
+      <div class="section-header">
+        <h2>Playback</h2>
+      </div>
+      <div class="playback-controls">
+        <button id="playBtn" class="btn btn-play" disabled>▶ Play</button>
+        <button id="pauseBtn" class="btn" disabled>⏸ Pause</button>
+        <button id="stopBtn" class="btn btn-danger" disabled>⏹ Stop</button>
+      </div>
+      <div class="settings-grid">
+        <div class="setting">
+          <label for="tempo">Tempo</label>
+          <input type="range" id="tempo" min="50" max="150" value="100">
+          <span id="tempoValue">100%</span>
+        </div>
+        <div class="setting">
+          <label for="transpose">Transpose</label>
+          <input type="range" id="transpose" min="-24" max="24" value="0">
+          <span id="transposeValue">0</span>
+        </div>
+        <div class="setting">
+          <label for="polyphony">Max Notes</label>
+          <select id="polyphony">
+            <option value="1">1 (Melody)</option>
+            <option value="2" selected>2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+        <div class="setting">
+          <label for="delay">Start Delay</label>
+          <input type="number" id="delay" min="0" max="5000" value="500" step="100">
+          <span>ms</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Keyboard Test -->
+    <section class="section">
+      <div class="section-header">
+        <h2>Keyboard Test</h2>
+        <span class="hint">Click to test key injection</span>
+      </div>
+      <div class="keyboard">
+        <div class="octave">
+          <div class="octave-label">High</div>
+          <div class="keys">
+            <button class="key" data-key="Q" data-mod="none">Q<span>1̇</span></button>
+            <button class="key sharp" data-key="Q" data-mod="shift">#</button>
+            <button class="key" data-key="W" data-mod="none">W<span>2̇</span></button>
+            <button class="key sharp" data-key="W" data-mod="shift">#</button>
+            <button class="key flat" data-key="E" data-mod="ctrl">♭</button>
+            <button class="key" data-key="E" data-mod="none">E<span>3̇</span></button>
+            <button class="key" data-key="R" data-mod="none">R<span>4̇</span></button>
+            <button class="key sharp" data-key="R" data-mod="shift">#</button>
+            <button class="key" data-key="T" data-mod="none">T<span>5̇</span></button>
+            <button class="key sharp" data-key="T" data-mod="shift">#</button>
+            <button class="key flat" data-key="Y" data-mod="ctrl">♭</button>
+            <button class="key" data-key="Y" data-mod="none">Y<span>6̇</span></button>
+            <button class="key flat" data-key="U" data-mod="ctrl">♭</button>
+            <button class="key" data-key="U" data-mod="none">U<span>7̇</span></button>
+          </div>
+        </div>
+        <div class="octave">
+          <div class="octave-label">Medium</div>
+          <div class="keys">
+            <button class="key" data-key="A" data-mod="none">A<span>1</span></button>
+            <button class="key sharp" data-key="A" data-mod="shift">#</button>
+            <button class="key" data-key="S" data-mod="none">S<span>2</span></button>
+            <button class="key sharp" data-key="S" data-mod="shift">#</button>
+            <button class="key flat" data-key="D" data-mod="ctrl">♭</button>
+            <button class="key" data-key="D" data-mod="none">D<span>3</span></button>
+            <button class="key" data-key="F" data-mod="none">F<span>4</span></button>
+            <button class="key sharp" data-key="F" data-mod="shift">#</button>
+            <button class="key" data-key="G" data-mod="none">G<span>5</span></button>
+            <button class="key sharp" data-key="G" data-mod="shift">#</button>
+            <button class="key flat" data-key="H" data-mod="ctrl">♭</button>
+            <button class="key" data-key="H" data-mod="none">H<span>6</span></button>
+            <button class="key flat" data-key="J" data-mod="ctrl">♭</button>
+            <button class="key" data-key="J" data-mod="none">J<span>7</span></button>
+          </div>
+        </div>
+        <div class="octave">
+          <div class="octave-label">Low</div>
+          <div class="keys">
+            <button class="key" data-key="Z" data-mod="none">Z<span>1̣</span></button>
+            <button class="key sharp" data-key="Z" data-mod="shift">#</button>
+            <button class="key" data-key="X" data-mod="none">X<span>2̣</span></button>
+            <button class="key sharp" data-key="X" data-mod="shift">#</button>
+            <button class="key flat" data-key="C" data-mod="ctrl">♭</button>
+            <button class="key" data-key="C" data-mod="none">C<span>3̣</span></button>
+            <button class="key" data-key="V" data-mod="none">V<span>4̣</span></button>
+            <button class="key sharp" data-key="V" data-mod="shift">#</button>
+            <button class="key" data-key="B" data-mod="none">B<span>5̣</span></button>
+            <button class="key sharp" data-key="B" data-mod="shift">#</button>
+            <button class="key flat" data-key="N" data-mod="ctrl">♭</button>
+            <button class="key" data-key="N" data-mod="none">N<span>6̣</span></button>
+            <button class="key flat" data-key="M" data-mod="ctrl">♭</button>
+            <button class="key" data-key="M" data-mod="none">M<span>7̣</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Status Bar -->
+    <footer class="status-bar">
+      <span id="status">Ready</span>
+      <span id="hotkeys">Play/Pause: F7 | Stop: F8</span>
+    </footer>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
